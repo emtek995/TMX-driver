@@ -8,6 +8,14 @@ firmware version. Unknown if it conflicts with other Thrustmaster
 wheels.
 
 ***
+## Log Files
+
+***
+The two log files contain the logs of the TMX Racing Wheel being
+initialized by the windows driver. More logs are planned to
+collect the force feedback data.
+
+***
 ## TODO
 
 - Force feedback
