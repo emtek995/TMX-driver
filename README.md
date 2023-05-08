@@ -4,8 +4,9 @@
 ***
 This is a basic driver for the Thrustmaster TMX Racing Wheel.
 Works with the newest firmware. Unknown if it works with earlier
-firmware version. Unknown if it conflicts with other Thrustmaster
-wheels.
+firmware version. You will need to blacklist the hid-thrustmaster
+and hid-tmff kernel modules for this to work untill I can patch
+this into those modules.
 
 ***
 ## Log Files
