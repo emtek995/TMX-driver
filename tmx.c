@@ -2,13 +2,7 @@
 #include <linux/init.h>
 #include <linux/usb.h>
 #include <linux/hid.h>
-
-#define THRUSTMASTER_VID 0x044F
-// TMX wheel identifies as a Thrustmaster TMX GIP Racing Wheel on connection
-// After first init packet sent it changes to a Thrustmaster FFB Racing Wheel
-// After the second init packet is sent in becomes the Thrustmaster TMX Racing Wheel
-#define TMX_GIP 0xB67E
-//#define TMX_FFB 0xB65D
+#include "tmx.h"
 
 static void tmx_control_handler(struct urb *urb)
 {
@@ -62,7 +56,6 @@ static void tmx_disconnect(struct usb_interface *iface)
 
 static const struct usb_device_id tmx_devices[] = {
     {USB_DEVICE(THRUSTMASTER_VID, TMX_GIP)},
-    //    {USB_DEVICE(THRUSTMASTER_VID, TMX_FFB)},
     {}};
 
 MODULE_DEVICE_TABLE(usb, tmx_devices);
@@ -72,8 +65,6 @@ static struct usb_driver tmx_driver = {
     .id_table = tmx_devices,
     .probe = tmx_probe,
     .disconnect = tmx_disconnect};
-
-extern struct hid_driver hid_tmx_driver;
 
 static int __init tmx_init(void)
 {
@@ -86,10 +77,16 @@ static int __init tmx_init(void)
         return -1;
     }
     return 0;
+    if (0 > hid_register_driver(&hid_ffb_driver))
+    {
+        return -1;
+    }
+    return 0;
 }
 
 static void __exit tmx_exit(void)
 {
+    hid_unregister_driver(&hid_ffb_driver);
     hid_unregister_driver(&hid_tmx_driver);
     usb_deregister(&tmx_driver);
 }

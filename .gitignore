@@ -6,3 +6,4 @@
 *.symvers
 *.mod
 .vscode
+.ccls-cache
